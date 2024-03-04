@@ -8,6 +8,7 @@
     <script src="../Script/Dark-Mode.js"></script>
     <title>Movie Minds Hub</title>
     <link rel="icon" type="image/x-icon" href="../Icon/Icon-WebPage-2.png" />
+
 </head>
 
 <body>
@@ -37,11 +38,11 @@
             </form>
         </div>
 
-        <% if (profileData.UserName) { %>
+        <% if (userName) { %>
         <a href="/profile">
             <div class="logged-in-username" id="loggedInUsername">
                 <img src="../Icon/user.png" alt="">
-                <%= profileData.UserName %>
+                <%= userName %>
             </div>
         </a>
 
@@ -66,52 +67,19 @@
 
     </div>
 
-    <div class="Profile-container">
-        <div class="Profile-wrapp">
-            <center>
-                <h1> Profile </h1>
-            </center>
-            <ul>
-                <label for="">USER NAME</label>
-                <li>
-                    <%= profileData.UserName %>
-                    <button class="Edit-button">
-                        <a href="/editUsername"> EDIT </a>
-                    </button>
-                </li>
+    <div class="UpdateUser-container">
+        <h2>Edit User Name</h2>
 
-                <% if (profileData) { %>
-                <label for="">EMAIL</label>
-                <li>
-                    <%= profileData.Email %>
-                    <button class="Edit-button">
-                        EDIT
-                    </button>
-                </li>
-                <% } else { %>
-                <p>Profile Data not available</p>
-                <% } %>
-
-            </ul>
-
-            <div class="button-action">
-
-                <button class="back-button">
-                    <a href="/">
-                        <img src="../Icon/back-button.png" alt="" width="64px">
-                    </a>
-                </button>
-
-                <form action="/deleteUser" method="POST">
-                    <input type="hidden" name="userName" value="<%= profileData.UserName %>">
-                    <button type="submit" class="Delete-User-button">DELETE USER</button>
-                </form>
-
-            </div>
-
-        </div>
+        <form action="/updateUserName" method="POST" id="updateUserNameForm">
+            <label for="newUserName">New User Name:</label>
+            <input type="text" id="newUserName" name="newUserName" required />
+            <button type="submit">Update User Name</button>
+        </form>
     </div>
 
+    <!-- <div class="banner-container">
+        <div class="banner-images"></div>
+    </div> -->
 </body>
 
 </html>
