@@ -4,15 +4,15 @@ const session = require("express-session");
 const path = require("path");
 const axios = require("axios");
 const app = express();
-const cors = require("cors");
 const port = process.env.PORT || 5500;
+// const cors = require("cors");
 
+app.set("views", path.join(__dirname, "/public/views"));
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "public", "views"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "/public")));
+// app.use(cors());
 
 // Save Username
 app.use(
