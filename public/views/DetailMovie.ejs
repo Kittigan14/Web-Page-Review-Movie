@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../Css/style.css" />
+  <script src="../Script/Dark-Mode.js"></script>
+  <title>Movie Minds Hub</title>
+  <link rel="icon" type="image/x-icon" href="../Icon/Icon-WebPage-2.png" />
+</head>
+
+<body>
+  <!-- Nav Bar Menu -->
+  <div class="navbar">
+    <!-- Menu -->
+    <ul class="navbar-menu">
+      <li><a href="/" class="nav-item"> Home </a></li>
+      <li><a href="/movies" class="nav-item"> Movie </a></li>
+      <li><a href="/contact" class="nav-item"> Contact </a></li>
+      <li class="Caption"> Reviews By , For You </li>
+    </ul>
+
+    <!-- Logo Webpage -->
+    <div class="navbar-logo">
+      <img class="Logo-Dark" src="../Icon/Logo-WebPage.png" width="150px" height="150px" />
+      <img class="Logo-Light" src="../Icon/Logo-WebPage-Light.png" width="150px" height="150px" />
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar" id="searchBar">
+      <form action="/searchMovie" method="GET" class="search-form">
+        <input id="inputSearch" type="text" name="searchTerm" placeholder="Search ..." />
+        <button type="submit" class="button-search">
+          <img class="search-img" src="../Icon/Search-Icon-Dark1.png" alt="" />
+        </button>
+      </form>
+    </div>
+
+    <% if (userName) { %>
+      <a href="/profile">
+        <div class="logged-in-username" id="loggedInUsername">
+            <img src="../Icon/user.png" alt="">
+            <%= userName %>
+        </div>
+      </a>
+
+    <form action="/logout" method="GET">
+      <button type="submit" class="button-logout" id="logoutButton">
+        Logout
+      </button>
+    </form>
+    <% } else { %>
+    <!-- Show login and register buttons if the user is not logged in -->
+    <button class="button-login" id="loginButton">
+      <a href="/login"> Login </a>
+    </button>
+
+    <button class="button-register" id="registerButton">
+      <a href="/register"> Sign Up </a>
+    </button>
+    <% } %>
+
+    <button class="Button-Mode" onclick="toggleModeAndImage()">
+      <img class="image-Switch" id="imageSwitch" src="../Icon/Dark-mode-1.png" alt="Your Image">
+    </button>
+
+  </div>
+
+  <div class="detail-container">
+    <div class="movie-detail">
+      <h1 class="title-movie-detail">
+        <%= movie.Title %>
+        <div class="line-Detail"></div>
+      </h1>
+
+      <div class="detailText">
+        <b>Synopsis</b>
+        <br>
+        <p> <%= movie.Synopsis %></p>
+        <br />
+        <b>Release Date</b>
+        <br>
+        <p> <%= movie.Release %></p>
+        <br />
+        <b>Time</b>
+        <br>
+        <p> <%= movie.Duration %></p>
+        <br />
+        <b>Genre</b>
+        <br>
+        <p> <%= movie.GenresTitle %></p>
+        <br />
+      </div>
+
+      <img src="<%= movie.Image %>" alt="<%= movie.Title %>" class="movie-detail-img" />
+
+      <button class="back-movie-detail">
+        <a href="/movies">
+          <img src="../Icon/back-button.png" alt="" class="detail-img" />
+        </a>
+      </button>
+    </div>
+  </div>
+
+  <div class="Reviews-container">
+    <form action="/reviewsPost" method="post" class="Review-form">
+      <% if (userName)  { %>
+      <label for="comment" class="userReview"><%= userName %> </label>
+      <% } else { %>
+      <label for="comment" class="userReview"> User </label>
+      <% } %>
+      <input type="text" id="comment" name="comment" placeholder="Enter your comment..." required />
+      <input type="hidden" name="userName" value="<%= userName %>">
+      <input type="hidden" name="movieId" value="<%= movieId %>">
+      <button type="submit" class="submit-comment">
+        <img src="../Icon/icon-Comment.png" alt="">
+      </button>
+    </form>
+  </div>
+
+  <div class="show-comment-movie">
+    <div class="Comment-list">
+      <div class="Comment-content">
+        <% if (!comments || comments.length === 0) { %>
+          <p>No Comment...</p>
+        <% } else { %>
+          <% for (const comment of comments) { %>
+            <p class="Username-Comment">
+              <img src="../Icon/user.png" alt="">
+              <%= comment.UserName %>
+            </p>
+            <p class="Comment-Users"><%= comment.Comment %></p>
+            <br><p class="Line-Comment"></p><br>
+          <% } %>
+        <% } %>
+        </div>
+      </div>
+  </div>
+
+</body>
+
+</html>

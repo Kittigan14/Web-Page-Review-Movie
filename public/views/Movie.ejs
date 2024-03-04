@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../Css/style.css" />
+  <script src="../Script/Dark-Mode.js"></script>
+  <script src="../Script/RequestMovie.js"></script>
+  <title>Movie Minds Hub</title>
+  <link rel="icon" type="image/x-icon" href="../Icon/Icon-WebPage-2.png" />
+</head>
+
+<body>
+  <!-- Nav Bar Menu -->
+  <div class="navbar">
+    <!-- Menu -->
+    <ul class="navbar-menu">
+      <li><a href="/" class="nav-item"> Home </a></li>
+      <li><a href="/movies" class="nav-item"> Movie </a></li>
+      <li><a href="/contact" class="nav-item"> Contact </a></li>
+      <li class="Caption"> Reviews By , For You </li>
+    </ul>
+
+    <!-- Logo Webpage -->
+    <div class="navbar-logo">
+      <img class="Logo-Dark" src="../Icon/Logo-WebPage.png" width="150px" height="150px" />
+      <img class="Logo-Light" src="../Icon/Logo-WebPage-Light.png" width="150px" height="150px" />
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar" id="searchBar">
+      <form action="/searchMovie" method="GET" class="search-form">
+        <input id="inputSearch" type="text" name="searchTerm" placeholder="Search ..." />
+        <button type="submit" class="button-search">
+          <img class="search-img" src="../Icon/Search-Icon-Dark1.png" alt="" />
+        </button>
+      </form>
+    </div>
+
+    <% if (userName) { %>
+      <a href="/profile">
+        <div class="logged-in-username" id="loggedInUsername">
+            <img src="../Icon/user.png" alt="">
+            <%= userName %>
+        </div>
+      </a>
+
+    <form action="/logout" method="GET">
+      <button type="submit" class="button-logout" id="logoutButton">
+        Logout
+      </button>
+    </form>
+    <% } else { %>
+    <!-- Show login and register buttons if the user is not logged in -->
+    <button class="button-login" id="loginButton">
+      <a href="/login"> Login </a>
+    </button>
+
+    <button class="button-register" id="registerButton">
+      <a href="/register"> Sign Up </a>
+    </button>
+    <% } %>
+
+    <button class="Button-Mode" onclick="toggleModeAndImage()">
+      <img class="image-Switch" id="imageSwitch" src="../Icon/Dark-mode-1.png" alt="Your Image">
+    </button>
+
+  </div>
+
+  <div class="movie-Genres">
+    <ul>
+      <li class="text-genre">Genre |</li>
+      <% if (genres && genres.length) { %>
+      <% for (let i = 0; i < genres.length; i++) { %>
+      <li>
+        <a href="javascript:void(0);" class="genres-name" data-genre-id="<%= genres[i].GenresID %>">
+          <%= genres[i].GenreName %>
+        </a>
+      </li>
+      <% } %>
+      <% } else { %>
+      <li>No genres available</li>
+      <% } %>
+    </ul>
+  </div>
+
+  <div class="movie-container" id="movieContainer">
+    <% if (movies && movies.length) { %>
+    <% for (let i = 0; i < movies.length; i++) { %>
+    <div class="movie-list" data-genre-id="<%= movies[i].GenresID %>" data-movie-id="<%= movies[i].MovieID %>">
+      <div class="movie-images">
+        <a href="/detailMovie/<%= movies[i].MovieID %>">
+          <img src="<%= movies[i].Image %>" alt="" />
+        </a>
+        <div class="title"><%= movies[i].Title %></div>
+      </div>
+    </div>
+    <% } %>
+    <% } else { %>
+    <p>No movies available for the selected genre.</p>
+    <% } %>
+  </div>
+</body>
+
+</html>
