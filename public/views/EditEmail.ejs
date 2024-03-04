@@ -8,7 +8,9 @@
     <script src="../Script/Dark-Mode.js"></script>
     <title>Movie Minds Hub</title>
     <link rel="icon" type="image/x-icon" href="../Icon/Icon-WebPage-2.png" />
+
 </head>
+
 <body>
     <!-- Nav Bar Menu -->
     <div class="navbar">
@@ -36,11 +38,11 @@
             </form>
         </div>
 
-        <% if (profileData.UserName) { %>
+        <% if (userName) { %>
         <a href="/profile">
             <div class="logged-in-username" id="loggedInUsername">
                 <img src="../Icon/user.png" alt="">
-                <%= profileData.UserName %>
+                <%= userName %>
             </div>
         </a>
 
@@ -65,55 +67,19 @@
 
     </div>
 
-    <div class="Profile-container">
-        <div class="Profile-wrapp">
-            <center>
-                <h4> Profile </h4>
-            </center>
-            <ul>
-                <label for="">USER NAME</label>
-                <li>
-                    <%= profileData.UserName %>
-                    <button class="Edit-button">
-                        <a href="/editUsername"> EDIT </a>
-                    </button>
-                </li>
+    <div class="UpdateUser-container">
+        <h2>Edit Email</h2>
 
-                <% if (profileData) { %>
-                <label for="">EMAIL</label>
-                <li>
-                    <%= profileData.Email %>
-                    <button class="Edit-button">
-                        <a href="/editEmail">EDIT</a>
-                    </button>
-                </li>
-                <% } else { %>
-                <p>Profile Data not available</p>
-                <% } %>
-
-            </ul>
-
-            <div class="button-action">
-
-                <button class="back-button">
-                    <a href="/">
-                        <img src="../Icon/back-button.png" alt="" width="64px">
-                    </a>
-                </button>
-
-                <form action="/deleteUser" method="POST">
-                    <input type="hidden" name="userName" value="<%= profileData.UserName %>">
-                    <button type="submit" class="Delete-User-button">DELETE USER</button>
-                </form>
-
-            </div>
-
-        </div>
+        <form action="/updateEmail" method="POST" id="updateEmailForm">
+            <label for="newEmail">New Email:</label>
+            <input type="email" id="newEmail" name="newEmail" required />
+            <button type="submit">Update Email</button>
+        </form>
     </div>
 
-    <div class="banner-container">
+    <!-- <div class="banner-container">
         <div class="banner-images"></div>
-    </div>
+    </div> -->
 </body>
 
 </html>

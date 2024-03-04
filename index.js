@@ -322,9 +322,21 @@ app.get("/editUsername", (req, res) => {
     });
 });
 
+app.get("/editEmail", (req, res) => {
+    const userName = req.session.user ? req.session.user.UserName : "";
+    const email = req.body.Email;
+    res.render("EditEmail", {
+        Email: email,
+        newEmail: "",
+        userName
+    });
+});
+
 app.post('/updateUserName', async (req, res) => {
     const newUserName = req.body.newUserName;
     const userID = req.session.user ? req.session.user.UserID : null;
+
+    console.log(userID);
 
     try {
         if (userID) {
@@ -337,6 +349,28 @@ app.post('/updateUserName', async (req, res) => {
             }
         } else {
             res.status(403).send('User not authenticated');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.post('/updateEmail', async (req, res) => {
+    const newEmail = req.body.newEmail;
+    const userID = req.session.user ? req.session.user.UserID : null;
+
+    try {
+        if (userID) {
+            const response = await axios.post(base_url + '/updateEmail', { newEmail, userID });
+
+            if (response.data === 'Update Email Successfully!') {
+                res.redirect('/profile');
+            } else {
+                res.status(500).send('Failed to update Email');
+            }
+        } else {
+            res.status(403).send('Email not authenticated');
         }
     } catch (error) {
         console.error(error);

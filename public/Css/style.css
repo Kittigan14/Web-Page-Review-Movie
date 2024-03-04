@@ -202,7 +202,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 998;
+    z-index: 990;
 
     & .banner-images {
         width: 100%;
@@ -869,19 +869,26 @@
     align-items: center;
 
     & .Profile-wrapp {
-        /* outline: 1px solid red; */
-        width: 550px;
+        width: 600px;
         height: 650px;
         display: grid;
+        background-color: #ffffffdf;
         justify-content: center;
         align-items: center;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 
+        & h4 {
+            font-size: 60px;
+            text-transform: uppercase;
+        }
+
         & ul {
             width: 500px;
             height: 400px;
             display: grid;
+            /* background: #ffffff; */
+            backdrop-filter: blur(10px);
             align-items: center;
             padding: 20px;
             font-size: 20px;
@@ -889,11 +896,11 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 
             & li {
-                margin: 10px 15px;
+                margin: 5px 15px;
                 font-weight: 300;
                 padding: 10px;
                 border-radius: 10px;
-                box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+                box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -905,13 +912,21 @@
                     border-radius: 10px;
                     cursor: pointer;
                     transition: all .5s ease;
-                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+                    background: #fff;
+
+                    & a {
+                        color: #1a1a1a;
+                        transition: all .5s ease;
+                    }
                 }
 
                 & .Edit-button:hover {
                     transform: scale(1.06);
                     background: #1a1a1a;
-                    color: #fff;
+                    a {
+                        color: #fff;
+                    }
                 }
             }
         }
@@ -957,4 +972,8 @@
             }
         }
     }
+}
+
+.Profile-wrapp {
+    z-index: 997;
 }
