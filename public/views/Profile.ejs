@@ -9,6 +9,7 @@
     <title>Movie Minds Hub</title>
     <link rel="icon" type="image/x-icon" href="../Icon/Icon-WebPage-2.png" />
 </head>
+
 <body>
     <!-- Nav Bar Menu -->
     <div class="navbar">
@@ -103,7 +104,7 @@
 
                 <form action="/deleteUser" method="POST">
                     <input type="hidden" name="userName" value="<%= profileData.UserName %>">
-                    <button type="submit" class="Delete-User-button">DELETE USER</button>
+                    <button type="submit" class="Delete-User-button" onclick="deleteUser()">DELETE USER</button>
                 </form>
 
             </div>
@@ -114,6 +115,34 @@
     <div class="banner-container">
         <div class="banner-images"></div>
     </div>
+
+    <script>
+        function deleteUser() {
+            var confirmation = confirm("Are you sure you want to delete the data?");
+            if (confirmation) {
+                fetch("/deleteUser", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            userName: "yourUserName",
+                            confirmation: true
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
+            } else {
+                console.log("Deletion canceled");
+            }
+        }
+    </script>
+
 </body>
 
 </html>
