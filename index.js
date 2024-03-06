@@ -25,8 +25,8 @@ app.use(
     })
 );
 
-const base_url = "http://localhost:3000";
-// const base_url = "https://server-system-movie-main.onrender.com";
+// const base_url = "http://localhost:3000";
+const base_url = "https://server-system-movie.onrender.com";
 
 // Home Routes
 app.get("/", (req, res) => {
