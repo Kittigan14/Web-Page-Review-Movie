@@ -62,24 +62,26 @@
         <% } %>
 
         <button class="Button-Mode" onclick="toggleModeAndImage()">
-            <img class="image-Switch" id="imageSwitch" src="../Icon/Dark-mode-1.png" alt="Your Image">
+            <p class="image-Switch" id="imageSwitch" src="#" alt="">
         </button>
 
     </div>
 
     <div class="UpdateUser-container">
+        <br><br>
         <h2>Edit User Name</h2>
+        <br><br><br>
 
         <form action="/updateUserName" method="POST" id="updateUserNameForm">
             <label for="newUserName">New User Name:</label>
             <input type="text" id="newUserName" name="newUserName" required />
-            <button type="submit">Update User Name</button>
+            <button type="submit" class="button-update-data">Update User Name</button>
         </form>
     </div>
 
-    <!-- <div class="banner-container">
+    <div class="banner-container">
         <div class="banner-images"></div>
-    </div> -->
+    </div>
 </body>
 
 </html>

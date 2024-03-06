@@ -5,14 +5,16 @@ const path = require("path");
 const axios = require("axios");
 const app = express();
 const port = process.env.PORT || 5500;
-// const cors = require("cors");
+const cors = require("cors");
 
 app.set("views", path.join(__dirname, "/public/views"));
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(express.static(path.join(__dirname, "/public")));
-// app.use(cors());
+app.use(cors());
 
 // Save Username
 app.use(
@@ -24,7 +26,7 @@ app.use(
 );
 
 // const base_url = "http://localhost:3000";
-const base_url = "http://node59842-moviemindshub.proen.app.ruk-com.cloud";
+const base_url = "https://server-system-movie-main.onrender.com";
 
 // Home Routes
 app.get("/", (req, res) => {
@@ -194,19 +196,18 @@ app.get("/searchMovie", async (req, res) => {
     try {
         const searchTerm = req.query.searchTerm;
         if (!searchTerm) {
-            res.status(400).send("Search term is required");
+            res.redirect('/');
             return;
         }
-        const response = await axios.get(
-            `${base_url}/searchMovie?searchTerm=${searchTerm}`
-        );
+        const response = await axios.get(`${base_url}/searchMovie?searchTerm=${searchTerm}`);
         if (response.data.movies && response.data.movies.length === 1) {
             const movieId = response.data.movies[0].MovieID;
             res.redirect(`/detailMovie/${movieId}`);
             return;
         }
+
         const userName = req.session.user ? req.session.user.UserName : "";
-        res.render("SearchResult", {
+        res.render("index", {
             movies: response.data.movies,
             userName,
         });
@@ -254,7 +255,9 @@ app.post("/reviewsPost", async (req, res) => {
 app.post('/profilePost', async (req, res) => {
     try {
         const username = req.body.userName;
-        const response = await axios.post(`${base_url}/profilePost`, { userName: username });
+        const response = await axios.post(`${base_url}/profilePost`, {
+            userName: username
+        });
 
         console.log('Profile Data:', response.data);
         res.send(response.data);
@@ -267,7 +270,9 @@ app.post('/profilePost', async (req, res) => {
 app.post('/updateProfile', async (req, res) => {
     try {
         const newUserName = req.body.newUserName;
-        const response = await axios.post(`${base_url}/updateProfile`, { newUserName });
+        const response = await axios.post(`${base_url}/updateProfile`, {
+            newUserName
+        });
 
         console.log(response.data.message);
         res.redirect('/');
@@ -282,9 +287,13 @@ app.get('/profile', async (req, res) => {
         const userID = req.session.user ? req.session.user.UserID : null;
 
         if (userID) {
-            const response = await axios.post(`${base_url}/profilePost`, { userName: req.session.user.UserName });
+            const response = await axios.post(`${base_url}/profilePost`, {
+                userName: req.session.user.UserName
+            });
 
-            res.render('profile', { profileData: response.data });
+            res.render('Profile', {
+                profileData: response.data
+            });
         } else {
             res.status(403).send('User not authenticated');
         }
@@ -336,7 +345,10 @@ app.post('/updateUserName', async (req, res) => {
 
     try {
         if (userID) {
-            const response = await axios.post(base_url + '/updateUserName', { newUserName, userID });
+            const response = await axios.post(base_url + '/updateUserName', {
+                newUserName,
+                userID
+            });
 
             if (response.data === 'Update UserName Successfully!') {
                 res.redirect('/login');
@@ -358,7 +370,10 @@ app.post('/updateEmail', async (req, res) => {
 
     try {
         if (userID) {
-            const response = await axios.post(base_url + '/updateEmail', { newEmail, userID });
+            const response = await axios.post(base_url + '/updateEmail', {
+                newEmail,
+                userID
+            });
 
             if (response.data === 'Update Email Successfully!') {
                 res.redirect('/profile');

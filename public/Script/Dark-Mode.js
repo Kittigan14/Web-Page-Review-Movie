@@ -13,11 +13,11 @@ function applyDarkMode() {
 
 function applyCurrentImage() {
     const imageSwitch = document.getElementById('imageSwitch');
-    const newImageSrc = `../Icon/Dark-Mode-${currentImage}.png`;
+    // const newImageSrc = `../Icon/Dark-Mode-${currentImage}.png`;
 
     imageSwitch.style.opacity = '0';
     setTimeout(() => {
-        imageSwitch.src = newImageSrc;
+        // imageSwitch.src = newImageSrc;
         imageSwitch.style.opacity = '1';
     }, 500);
 }

@@ -9,7 +9,16 @@
   <title>Movie Minds Hub</title>
   <link rel="icon" type="image/x-icon" href="../Icon/Icon-WebPage-2.png" />
 </head>
+<style>
+  .banner-images {
+    z-index: -1;
+  }
 
+  .contact-container {
+    height: 91vh;
+    backdrop-filter: blur(10px);
+  }
+</style>
 <body>
   <!-- Nav Bar Menu -->
   <div class="navbar">
@@ -38,12 +47,12 @@
     </div>
 
     <% if (userName) { %>
-      <a href="/profile">
-        <div class="logged-in-username" id="loggedInUsername">
-            <img src="../Icon/user.png" alt="">
-            <%= userName %>
-        </div>
-      </a>
+    <a href="/profile">
+      <div class="logged-in-username" id="loggedInUsername">
+        <img src="../Icon/user.png" alt="">
+        <%= userName %>
+      </div>
+    </a>
 
     <form action="/logout" method="GET">
       <button type="submit" class="button-logout" id="logoutButton">
@@ -62,10 +71,67 @@
     <% } %>
 
     <button class="Button-Mode" onclick="toggleModeAndImage()">
-      <img class="image-Switch" id="imageSwitch" src="../Icon/Dark-mode-1.png" alt="Your Image">
+      <p class="image-Switch" id="imageSwitch" src="#" alt="">
     </button>
 
   </div>
-</body>
 
+  <div class="contact-container">
+
+    <div class="menu-contact">
+      <ul>
+
+        <li>
+          <div class="img-contact">
+            <div class="background-img">
+              <img src="../Icon/facebook.png" alt="x">
+            </div>
+            <a href="#">Facebook</a>
+          </div>
+        </li>
+        <li>
+          <div class="img-contact">
+            <div class="background-img">
+              <img src="../Icon/instagram.png" alt="x">
+            </div>
+            <a href="#">Instagram</a>
+          </div>
+        </li>
+        <li>
+          <div class="img-contact">
+            <div class="background-img">
+              <img src="../Icon/twitter.png" alt="x">
+            </div>
+            <a href="#">Twitter</a>
+          </div>
+        </li>
+        <li>
+          <div class="img-contact">
+            <div class="background-img">
+              <img src="../Icon/email.png" alt="x">
+            </div>
+            <a href="#">Email</a>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+    <div class="line"></div>
+
+    <div class="send-email">
+      <div class="title-send">
+        <label for="send-email"> Send Email </label>
+        <input type="text" name="send" id="send" placeholder="Enter your email...">
+        <button type="submit" class=""> Send </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="banner-container">
+    <div class="banner-images"></div>
+  </div>
+
+
+</body>
 </html>
