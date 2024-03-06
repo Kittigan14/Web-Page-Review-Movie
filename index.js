@@ -25,8 +25,8 @@ app.use(
     })
 );
 
-// const base_url = "http://localhost:3000";
-const base_url = "https://server-system-movie-main.onrender.com";
+const base_url = "http://localhost:3000";
+// const base_url = "https://server-system-movie-main.onrender.com";
 
 // Home Routes
 app.get("/", (req, res) => {
@@ -67,7 +67,7 @@ app.post("/loginPost", async (req, res) => {
 
     try {
         const response = await axios.post(`${base_url}/loginPost`, data);
-        console.log(response.data);
+        // console.log(response.data);
 
         if (response.data.result === "Login successfully") {
             req.session.user = {
@@ -176,20 +176,26 @@ app.get("/getMoviesByGenre/:GenresID", async (req, res) => {
 // Get DetailMovie By MovieID
 app.get("/detailMovie/:MovieID", async (req, res) => {
     try {
-        const movieId = req.params.MovieID;
-        const response = await axios.get(`${base_url}/detailMovie/${movieId}`);
-        const userName = req.session.user ? req.session.user.UserName : "";
-
-        res.render("DetailMovie", {
-            ...response.data,
-            userName,
-            movieId,
-        });
+      const movieId = req.params.MovieID;
+      const response = await axios.get(`${base_url}/detailMovie/${movieId}`);
+      const userLogin = req.session.user ? req.session.user.UserName : "";
+  
+      if (!response.data) {
+        res.status(404).send("Movie not found");
+        return;
+      }
+  
+      res.render("DetailMovie", {
+        ...response.data,
+        comments: response.data.comments,
+        userLogin,
+        movieId,
+      });
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+      console.error(error);
+      res.status(500).send("Internal Server Error");
     }
-});
+  });
 
 // Search Movie
 app.get("/searchMovie", async (req, res) => {
@@ -219,30 +225,33 @@ app.get("/searchMovie", async (req, res) => {
 
 // Reviews Route
 app.get("/reviews", async (req, res) => {
-    const userName = req.session.user ? req.session.user.UserName : "";
+    // const userName = req.session.user ? req.session.user.UserName : "";
+    const userID = req.session.user ? req.session.user.userID : "";
     const movieId = req.query.movieId;
     res.render("DetailMovie", {
-        userName: userName,
-        movieId: movieId,
+        // userName: userName,
+        userID: userID,
+        movieId: movieId
     });
 });
 
 app.post("/reviewsPost", async (req, res) => {
     try {
         const comment = req.body.comment;
-        const userName = req.session.user ? req.session.user.UserName : "";
         const movieId = req.body.movieId;
+        const userID = req.session.user ? req.session.user.UserID : "";
 
-        if (!userName) {
+        if (!userID) {
             res.redirect("/login");
             return;
         }
-
+        
         await axios.post(`${base_url}/reviewsPost`, {
             comment: comment,
-            userName: userName,
+            userID: userID,
             movieId: movieId,
         });
+        
 
         res.redirect(`/detailMovie/${movieId}`);
     } catch (err) {

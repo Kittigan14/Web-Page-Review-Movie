@@ -37,13 +37,13 @@
       </form>
     </div>
 
-    <% if (userName) { %>
-      <a href="/profile">
-        <div class="logged-in-username" id="loggedInUsername">
-            <img src="../Icon/user.png" alt="">
-            <%= userName %>
-        </div>
-      </a>
+    <% if (userLogin) { %>
+    <a href="/profile">
+      <div class="logged-in-username" id="loggedInUsername">
+        <img src="../Icon/user.png" alt="">
+        <%= userLogin %>
+      </div>
+    </a>
 
     <form action="/logout" method="GET">
       <button type="submit" class="button-logout" id="logoutButton">
@@ -105,13 +105,13 @@
 
   <div class="Reviews-container">
     <form action="/reviewsPost" method="post" class="Review-form">
-      <% if (userName)  { %>
-      <label for="comment" class="userReview"><%= userName %> </label>
+      <% if (userLogin)  { %>
+      <label for="comment" class="userReview"><%= userLogin %> </label>
       <% } else { %>
       <label for="comment" class="userReview"> User </label>
       <% } %>
       <input type="text" id="comment" name="comment" placeholder="Enter your comment..." required />
-      <input type="hidden" name="userName" value="<%= userName %>">
+      <input type="hidden" name="userName" value="<%= userLogin %>">
       <input type="hidden" name="movieId" value="<%= movieId %>">
       <button type="submit" class="submit-comment">
         <img src="../Icon/icon-Comment.png" alt="">
@@ -123,19 +123,19 @@
     <div class="Comment-list">
       <div class="Comment-content">
         <% if (!comments || comments.length === 0) { %>
-          <p>No Comment...</p>
+        <p>No Comment...</p>
         <% } else { %>
-          <% for (const comment of comments) { %>
-            <p class="Username-Comment">
-              <img src="../Icon/user.png" alt="">
-              <%= comment.UserName %>
-            </p>
-            <p class="Comment-Users"><%= comment.Comment %></p>
-            <br><p class="Line-Comment"></p><br>
-          <% } %>
+        <% for (let comment of comments) { %>
+        <p class="Username-Comment">
+          <img src="../Icon/user.png" alt="">
+          <%= comment.UserName %>
+        </p>
+        <p class="Comment-Users"><%= comment.Comment %></p>
+        <br><p class="Line-Comment"></p><br>
         <% } %>
-        </div>
+        <% } %>
       </div>
+    </div>
   </div>
 
 </body>
